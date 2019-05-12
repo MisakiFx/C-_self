@@ -1,20 +1,20 @@
 #include <iostream>
-//命名空间：为了防止不同文件中函数出现相同名字，使用不同的命名空间进行命名
-using namespace std;//使用标准输入输出命名空间 
+//锟斤拷锟斤拷锟秸间：为锟剿凤拷止锟斤拷同锟侥硷拷锟叫猴拷锟斤拷锟斤拷锟斤拷锟斤拷同锟斤拷锟街ｏ拷使锟矫诧拷同锟斤拷锟斤拷锟斤拷锟秸硷拷锟斤拷锟斤拷锟斤拷锟斤拷
+using namespace std;//使锟矫憋拷准锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟秸硷拷
 namespace M
 {
 	bool IsDierectory()
 	{
-		return true;
+		return true
 	}
 	bool IsHiden()
 	{
 		return false;
 	}
-} 
+}
 namespace ZHANG
 {
-	bool IsDierectory()
+	bool IsDierectory();
 	{
 		return true;
 	}
@@ -23,16 +23,16 @@ namespace ZHANG
 		return false;
 	}
 }
-bool IsDierectory()//全局函数 
+bool IsDierectory()//全锟街猴拷锟斤拷
 {
 	return true;
 }
-//using namespace M;//默认使用M的命名空间 
+//using namespace M;//默锟斤拷使锟斤拷M锟斤拷锟斤拷锟斤拷锟秸硷拷
 int main()
 {
 	double i = 20;
-	bool b = M::IsDierectory();//调用M命名空间内的函数
-	bool a = ZHANG::IsDierectory();//调用ZHANG命名空间内的函数
-	bool c = ::IsDierectory();//在用using namespace 后默认调用M内的命名空间
+	bool b = M::IsDierectory();//锟斤拷锟斤拷M锟斤拷锟斤拷锟秸硷拷锟节的猴拷锟斤拷
+	bool a = ZHANG::IsDierectory();//锟斤拷锟斤拷ZHANG锟斤拷锟斤拷锟秸硷拷锟节的猴拷锟斤拷
+	bool c = ::IsDierectory();//锟斤拷锟斤拷using namespace 锟斤拷默锟较碉拷锟斤拷M锟节碉拷锟斤拷锟斤拷锟秸硷拷
 	std::cout << "sizeof(i) = " << sizeof(i) << std::endl;
-} 
+}
