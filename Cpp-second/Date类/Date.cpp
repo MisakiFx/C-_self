@@ -22,6 +22,7 @@ Date& Date::operator-=(int num)
   {
     _day += GetMonthMaxDay(_month, _year);
     _month -= 1;
+    //这里借天数是向上一个月借因此顺序不要搞反了
     if(_month == 0)
     {
       _year--;
