@@ -1,4 +1,6 @@
 //组队竞赛
+//给出组队的数量和每个人数的能力值，队伍能力值为队伍中第二高的个人能力值
+//要求输出最优方案下队伍能力的综合
 #include <iostream>
 #include <vector>
 #include <algorithm>
