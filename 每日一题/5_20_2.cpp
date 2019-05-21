@@ -19,6 +19,7 @@ They are students. aeiou
 Thy r stdnts.
 
 */
+//方法一(On2)
 #include <iostream>
 #include <string>
 using namespace std;
@@ -35,9 +36,36 @@ int main()
       if(str1[i] == *it)
       {
         str1.erase(i, 1);
+        i--;
       }
     }
     ++it;
   }
   cout << str1 << endl;
 }
+
+//#include <iostream>
+//#include <string>
+//using namespace std;
+//int main()
+//{
+//  int array[256] = {0};
+//  string str1;
+//  string str2;
+//  getline(cin, str1);
+//  getline(cin, str2);
+//  //创建哈希映射
+//  for(int i = 0; i < str2.size(); i++)
+//  {
+//    array[str2[i]]++;
+//  }
+//  string ret;
+//  for(int i = 0; i < str1.size(); i++)
+//  {
+//    if(array[str1[i]] == 0)
+//    {
+//      ret += str1[i];
+//    }
+//  }
+//  cout << ret << endl;
+//}
