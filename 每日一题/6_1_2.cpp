@@ -1,4 +1,22 @@
-//差最小两素数
+//https://www.nowcoder.com/practice/f8538f9ae3f1484fb137789dec6eedb9?tpId=37&&tqId=21283&rp=1&ru=/activity/oj&qru=/ta/huawei/question-ranking
+/**
+ * 题目描述
+任意一个偶数（大于2）都可以由2个素数组成，组成偶数的2个素数有很多种情况，本题目要求输出组成指定偶数的两个素数差值最小的素数对
+输入描述:
+输入一个偶数
+
+输出描述:
+输出两个素数
+
+示例1
+
+输入
+20
+输出
+
+7
+13
+*/
 #include <iostream>
 using namespace std;
 bool isPrimeNum(int num)
