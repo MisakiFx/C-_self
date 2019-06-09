@@ -1,3 +1,30 @@
+//https://www.nowcoder.com/practice/769d45d455fe40b385ba32f97e7bcded?tpId=37&amp;&amp;tqId=21296&amp;rp=1&amp;ru
+/**
+ * 题目描述
+根据输入的日期，计算是这一年的第几天。。
+
+详细描述：
+
+输入某年某月某日，判断这一天是这一年的第几天？。
+
+ 
+输入描述:
+输入三行，分别是年，月，日
+
+输出描述:
+成功:返回outDay输出计算后的第几天;
+失败:返回-1
+
+示例1
+
+输入
+2012
+12
+31
+
+输出
+366
+ */
 #include <iostream>
 using namespace std;
 int main()
