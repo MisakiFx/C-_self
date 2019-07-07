@@ -1,6 +1,7 @@
 //动态规划背包问题
 #include <iostream>
 #include <vector>
+#include <climits>
 using namespace std;
 class Solution {
 public:
