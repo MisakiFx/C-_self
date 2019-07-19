@@ -4,6 +4,7 @@
 #include <string>
 class String
 {
+	friend std::ostream &operator<<(std::ostream &os, String str);
 public:
 	typedef char *iterator;
 	typedef const char *const_iterator;
@@ -297,7 +298,6 @@ public:
 
 		return _str[pos];
 	}
-
 	const char &operator[](size_t pos) const
 	{
 		assert(pos < _size);
@@ -363,5 +363,10 @@ private:
 
 };
 
+std::ostream& operator<<(std::ostream& os, String str)
+{
+	os << str._str;
+	return os;
+}
 size_t String::npos = -1;
 

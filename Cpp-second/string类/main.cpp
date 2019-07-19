@@ -6,5 +6,10 @@ using namespace std;
 int main()
 {
     String a = "123";
-    cout << a.Capacity() << " " << a.Size() << endl;
+    a.Reserve(10);
+    //a.Resize(5);
+    cout << a << " " << a.Capacity() << " " << a.Size() << endl;
+    String b;
+    b = a;
+    cout << b << " " << b.Capacity() << " " << b.Size() << endl;
 }
