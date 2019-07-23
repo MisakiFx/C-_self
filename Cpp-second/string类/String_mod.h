@@ -280,7 +280,7 @@ public:
 		return tmp;
 	}
 
-	String &operator+(const char *str)
+	String operator+(const char *str)
 	{
 		String tmp(*this);
 		tmp.Append(str);
@@ -350,6 +350,7 @@ public:
 				_str[i] = ch;
 				++_size;
 			}
+			_size = n;
 			_str[_size] = '\0';
 		}
 	}
