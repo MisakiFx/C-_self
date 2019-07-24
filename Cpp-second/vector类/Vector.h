@@ -39,7 +39,9 @@ public:
     Vector& operator=(Vector<T> vec)
     {
         Swap(vec);
+        return *this;
     }
+    //交换
     void Swap(Vector<T>& vec)
     {
         std::swap(_start, vec._start);
@@ -54,8 +56,82 @@ public:
         _finish = nullptr;
         _endOfStorge = nullptr;
     }
+    //迭代器相关
+    iterator begin()
+    {
+        return _start;
+    }
+    iterator end()
+    {
+        return _finish;
+    }
+    const_iterator begin() const
+    {
+        return _start;
+    }
+    const_iterator end() const
+    {
+        return _finish;
+    }
+    //插入
+    iterator Insert(iterator pos, const T& val)
+    {
+        assert(pos >= _start && pos <= _finish);
+        //扩容，扩容会导致pos要重新指定位置，因为内存地址变更
+        if(_finish == _endOfStorge)
+        {
+            size_t n = pos - _start;
+            size_t size = Capacity() == 0 ? 4 : 2 * Capacity();
+            Reserve(size);
+            pos = _start + n;
+        }
+        iterator it = _finish;
+        while(it != pos)
+        {
+            *it = *(it - 1);
+            it--;
+        }
+        *pos = val;
+        _finish++;
+        return pos;
+    }
+    //删除
+    iterator Erase(iterator pos)
+    {
+        assert(pos >= _start && pos <= _finish);
+        iterator it = pos + 1;
+        while(it != _finish)
+        {
+            *(it - 1) = *it;
+            it++;
+        }
+        _finish--;
+        return pos;
+    }
+    //尾插
+    void Push_back(const T& val)
+    {
+        //扩容
+        if(_endOfStorge == _finish)
+        {
+            size_t capacity = Capacity() == 0 ? 4 : 2 * Capacity();
+            Reserve(capacity);
+        }
+        *_finish = val;
+        _finish++;
+    }
+    //尾删
+    void Pop_back()
+    {
+        assert(_finish > _start);
+        _finish--;
+    }
     //operator[]重载
     T& operator[](size_t pos)
+    {
+        return _start[pos];
+    }
+    const T& operator[](size_t pos) const
     {
         return _start[pos];
     }

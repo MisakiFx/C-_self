@@ -6,15 +6,15 @@ using namespace std;
 int main()
 {
     Vector<int> arr(4, 6);
-    arr.Reserve(20);
-    Vector<int> arr2;
-    arr2 = arr;
-    for(int i = 0; i < arr2.Size(); i++)
+    //Vector<int>::iterator it = arr.Insert(arr.begin(), 1);
+    //Vector<int>::iterator it2 = arr.Erase(arr.begin());
+    for(int i = 0; i < arr.Size(); i++)
     {
-        cout << arr2[i] << " ";
+        cout << arr[i] << " ";
     }
     cout << endl;
-    cout << arr2.Capacity() << " " << arr2.Size() << endl;
+    cout << arr.Capacity() << " " << arr.Size() << endl;
+    //cout << *it2 << endl;
     //cout << arr.Capacity() << endl;
     //cout << arr.Size() << endl;
     //arr.Reserve(10);
