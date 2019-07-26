@@ -166,7 +166,7 @@ public:
         }
     }
     //重新给长度,空白部分val填充
-    void Resize(size_t size, T val = 0)
+    void Resize(size_t size, T val = T())
     {
         Reserve(size);
         if(Size() < size)
