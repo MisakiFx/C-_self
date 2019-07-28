@@ -1,4 +1,5 @@
 #pragma once
+#include <assert.h>
 template<class T>
 //定义结点类
 struct ListNode
@@ -72,12 +73,44 @@ class List
 public:
     typedef ListIterator<T, T&, T*> iterator;
     typedef ListIterator<T, const T&, const T*> const_iterator;
-    //构造函数
+    //构造函数j
     List()
     {
-        _head = new Node();
+        _head = new Node;
         _head->_next = _head;
         _head->_prev = _head;
+    }
+    //拷贝构造
+    List(const List& list)
+        :_head(new Node)
+    {
+        _head->_next = _head;
+        _head->_prev = _head;
+        const_iterator it = list.begin();
+        while(it != list.end())
+        {
+            Push_back(*it);
+            it++;
+        }
+    }
+    //operator=重载
+    List& operator=(const List& list)
+    {
+        List listTemp = list;
+        Swap(listTemp);
+    }
+    void Swap(List& list)
+    {
+        std::swap(_head, list._head);
+    }
+    //析构函数
+    ~List()
+    {
+        
+        while(_head->_next != _head)
+        {
+            Pop_back();
+        }
     }
     iterator begin()
     {
@@ -94,6 +127,30 @@ public:
     const_iterator end() const
     {
         return _head;
+    }
+    //尾插
+    void Push_back(const T& data)
+    {
+        assert(_head != nullptr);
+        Node* tail = _head->_prev;
+        Node* newNode = new Node(data);
+        newNode->_next = _head;
+        newNode->_prev = tail;
+        tail->_next = newNode;
+        _head->_prev = newNode;
+    }
+    //尾删
+    void Pop_back()
+    {
+        assert(_head != nullptr);
+        if(_head->_next == _head)
+        {
+            return;
+        }
+        Node* tail = _head->_prev;
+        tail->_prev->_next = _head;
+        _head->_prev = tail->_prev;
+        delete tail;
     }
 private:
     Node* _head;

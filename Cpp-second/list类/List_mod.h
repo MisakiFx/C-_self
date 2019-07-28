@@ -105,6 +105,7 @@ public:
 		return iterator(_head);
 	}
 
+	//尾插
 	void PushBack(const T& x)
 	{
 		Node* tail = _head->_prev;
