@@ -1,7 +1,7 @@
 #pragma once
 #include <assert.h>
-template<class T>
 //定义结点类
+template<class T>
 struct ListNode
 {
     ListNode<T>* _prev;
@@ -99,6 +99,7 @@ public:
         List listTemp = list;
         Swap(listTemp);
     }
+    //交换
     void Swap(List& list)
     {
         std::swap(_head, list._head);
@@ -127,6 +128,28 @@ public:
     const_iterator end() const
     {
         return _head;
+    }
+    iterator Erase(iterator& it)
+    {
+        assert(it._node != nullptr);
+        Node* pTemp = it._node;
+        Node* pNew = pTemp->_next;
+        //it->_node = pTemp->_next;
+        pTemp->_prev->_next = pTemp->_next;
+        pTemp->_next->_prev = pTemp->_prev;
+        delete pTemp;
+        return pNew;
+    }
+    //插入
+    iterator Insert(iterator& it, const T& data = T())
+    {
+        assert(it._node != nullptr);
+        Node* newNode = new Node(data);
+        newNode->_next = it._node;
+        newNode->_prev = it._node->_prev;
+        it._node->_prev->_next = newNode;
+        it._node->_prev  = newNode;
+        return newNode;
     }
     //尾插
     void Push_back(const T& data)
