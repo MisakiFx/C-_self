@@ -1,6 +1,8 @@
 #pragma once
-
-template<class T, class Container = deque<int>>
+#include <iostream>
+#include <deque>
+#include <list>
+template<class T, class Container = std::deque<int>>
 class Queue
 {
 public:
@@ -40,7 +42,7 @@ private:
 void TestQueue()
 {
 	//Queue<int, vector<int>> q; vector²»Ö§³Ö
-	Queue<int, list<int>> q;
+	Queue<int, std::list<int>> q;
 	q.Push(1);
 	q.Push(2);
 	q.Push(3);
@@ -48,7 +50,7 @@ void TestQueue()
 
 	while (!q.Empty())
 	{
-		cout << q.Front() << endl;
+		std::cout << q.Front() << std::endl;
 		q.Pop();
 	}
 }
