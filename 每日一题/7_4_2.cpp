@@ -1,4 +1,5 @@
 // write your code here cpp
+//纯粹智力题，推导公式直接套公式
 #include <iostream>
 #include <cmath>
 using namespace std;
