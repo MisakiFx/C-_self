@@ -193,43 +193,81 @@
 //    Person person;
 //    Teacher teacher;
 //};
+//#include <iostream>
+//#include <string>
+//using namespace std;
+////基类
+//class Person
+//{
+//public:
+//    static void Print()
+//    {
+//        cout << "Person::_count = " << _count << endl;
+//    }
+//    static int _count;
+//protected:
+//    int _age = 20;
+//    string _name = "Misaki"; 
+//};
+//int Person::_count = 1;
+////派生类
+//class Teacher: public Person
+//{
+//public:
+//    static void Print()
+//    {
+//        //cout << "Teacher::_count = " << _count << endl;//编不过了，因为静态函数中只能调用静态成员，而此时_count隐藏已经不是静态成员
+//        cout << "Person::_count = " << Person::_count << endl;
+//    }
+//    int _count = 5;
+//protected:
+//    int _age = 19;
+//};
 #include <iostream>
-#include <string>
 using namespace std;
-//基类
-class Person
+class A
 {
 public:
-    static void Print()
-    {
-        cout << "Person::_count = " << _count << endl;
-    }
-    static int _count;
-protected:
-    int _age = 20;
-    string _name = "Misaki"; 
+    char _a = 'A';
 };
-int Person::_count = 1;
-//派生类
-class Teacher: public Person
+//使用虚拟继承使B继承于A
+class B: virtual public A
 {
 public:
-    static void Print()
-    {
-        //cout << "Teacher::_count = " << _count << endl;//编不过了，因为静态函数中只能调用静态成员，而此时_count隐藏已经不是静态成员
-        cout << "Person::_count = " << Person::_count << endl;
-    }
-    int _count = 5;
-protected:
-    int _age = 19;
+    char _b = 'B';
+};
+//使用虚拟继承使C继承于A
+class C: virtual public A
+{
+public:
+    char _c = 'C';
+};
+//D继承于B,C
+class D: public B, public C
+{
+public:
+    char _d = 'D';
 };
 int main()
 {
-    Person::_count = 3;
-    Person::Print();
-    Teacher::Print();
-    Teacher teacher;
-    cout << teacher._count << endl;//可以访问了
+    //一旦使用虚拟继承那么D类中就只存在一份A的成员变量
+    //D d;
+    ////无论用什么作用域进行访问都只能访问到同一份
+    //d.B::_a = 'E';
+    //cout << d._a << endl;
+    //cout << d.B::_a << endl;
+    //cout << d.C::_a << endl;
+    //d.C::_a = 'F';
+    //cout << d._a << endl;
+    //cout << d.B::_a << endl;
+    //cout << d.C::_a << endl;
+    //cout << d.A::_a << endl;
+    cout << sizeof(B) << endl;
+    //Person::_count = 3;
+    //Person::Print();
+    //Teacher::Print();
+    //Teacher teacher;
+    //cout << teacher._count << endl;//可以访问了
     //Test test;
     //test.Print2();
     //Teacher teacher;
