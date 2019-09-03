@@ -1,57 +1,57 @@
-//#include <iostream>
-//#include <vector>
-//#include <cstring>
-// 
-//using namespace std;
-// 
-////整型模板
-//template<unsigned N, unsigned M>
-//bool compare (const char (&p1)[N], const char (&p2)[M])
-//{
-//	std::cout << "size : " << N << " " << M << std::endl;
-//	return strcmp(p1, p2);
-//}
-// 
-////指针
-//template<const char* C>
-//void pointerT(const char* str){
-//	std::cout << C << " " << str << std::endl;
-//}
-// 
-////引用
-//template<const char (&ra)[9]>
-//void referenceT(const char* str){
-//	std::cout << ra << " " << str << std::endl;
-//}
-//
-// 
-//void f(const char* c) {std::cout << c << std::endl; }
-// 
-////函数指针
-//template<void (*F)(const char*)>
-//void fpointerT(const char* c) {
-//	F(c);
-//}
-//
-//extern const char ca[] = "Caroline";  //初始化指针
-//extern const char cr[9] = "Caroline"; //初始化引用, 包含一个结尾符号
-//int main(void)
-//{
-//    if(compare("Caroline", "Wendy")) {
-//		std::cout << "Caroline is long." << std::endl;
-//	} else {
-//		std::cout << "Wendy is long." << std::endl;
-//	}
-// 
-//	//无法使用局部变量或者动态变量作为模板参数
-//	pointerT<ca>("Wendy"); //指针
-// 
-//	referenceT<cr>("Wendy"); //引用
-// 
-//	fpointerT<f>("Caroline Wendy"); //函数指针
-// 
-//	return 0;
-//}
+#include <iostream>
+#include <vector>
+#include <cstring>
+ 
+using namespace std;
+ 
+//整型模板
+template<unsigned N, unsigned M>
+bool compare (const char (&p1)[N], const char (&p2)[M])
+{
+	std::cout << "size : " << N << " " << M << std::endl;
+	return strcmp(p1, p2);
+}
+ 
+//指针
+template<const char* C>
+void pointerT(const char* str){
+	std::cout << C << " " << str << std::endl;
+}
+ 
+//引用
+template<const char (&ra)[9]>
+void referenceT(const char* str){
+	std::cout << ra << " " << str << std::endl;
+}
+
+ 
+void f(const char* c) {std::cout << c << std::endl; }
+ 
+//函数指针
+template<void (*F)(const char*)>
+void fpointerT(const char* c) {
+	F(c);
+}
+
+extern const char ca[] = "Caroline";  //初始化指针
+extern const char cr[9] = "Caroline"; //初始化引用, 包含一个结尾符号
+int main(void)
+{
+    if(compare("Caroline", "Wendy")) {
+		std::cout << "Caroline is long." << std::endl;
+	} else {
+		std::cout << "Wendy is long." << std::endl;
+	}
+ 
+	//无法使用局部变量或者动态变量作为模板参数
+	pointerT<ca>("Wendy"); //指针
+ 
+	referenceT<cr>("Wendy"); //引用
+ 
+	fpointerT<f>("Caroline Wendy"); //函数指针
+ 
+	return 0;
+}
 //#include <iostream>
 //#include <string>
 //#include <vector>
@@ -67,7 +67,7 @@
 //class Myclass
 //{
 //};
-//extern const char s1[] = "hello";
+//const char s1[] = "hello";
 //extern const char s2[] = "hello";
 //int main()
 //{
@@ -155,8 +155,8 @@
 //    Print();
 //    cout << a << endl;
 //}
-#include <iostream>
-using namespace std;
+//#include <iostream>
+//using namespace std;
 //为了验证函数模板与类模板
 //先写一个函数模板
 //template<class T>
@@ -191,60 +191,60 @@ using namespace std;
 //    cout << "overload" << endl;
 //    return a + b;
 //}
-template<class T1, class T2>
-class Data
-{
-public:
-    Data()
-    {
-        cout << "Data<T1, T2>" << endl;
-    }
-private:
-    T1 _data1;
-    T2 _data2;
-};
-//这样的把所有的模板参数都进行实例特化的就叫全特化
-template<>
-class Data<int, char>
-{
-public:
-    Data()
-    {
-        cout << "Data<int, char>" << endl;
-    }
-private:
-    int _data1;
-    char _data2;
-};
-//这里就是一个部分特化，只将第一个参数进行实例化的情况
-template<class T>
-class Data<int, T>
-{
-public:
-    Data()
-    {
-        cout << "Data<int, T>" << endl;
-    }
-};
-//将两个参数类型限制为指针类型，如果两个参数都是指针类型则调用这个特化
-template<class T1, class T2>
-class Data<T1*, T2*>
-{
-public:
-    Data()
-    {
-        cout << "Data<T1*, T2*>" << endl;
-    }
-};
-int main()
-{
-    //double a = 1;
-    //double* ap = &a;
-    //int b = 2;
-    //int* bp = &b;
-    //cout << Add(ap, bp) << endl;//调用重载的Add
-    //cout << Add<int>(a, b) << endl;//调用特化的Add
-    Data<int, int> data1;//这里会调用部分特化
-    Data<int, char> data2;//这里调用全特化
-    Data<int*, char*> data3;//这里调用类型限制的特化
-}
+//template<class T1, class T2>
+//class Data
+//{
+//public:
+//    Data()
+//    {
+//        cout << "Data<T1, T2>" << endl;
+//    }
+//private:
+//    T1 _data1;
+//    T2 _data2;
+//};
+////这样的把所有的模板参数都进行实例特化的就叫全特化
+//template<>
+//class Data<int, char>
+//{
+//public:
+//    Data()
+//    {
+//        cout << "Data<int, char>" << endl;
+//    }
+//private:
+//    int _data1;
+//    char _data2;
+//};
+////这里就是一个部分特化，只将第一个参数进行实例化的情况
+//template<class T>
+//class Data<int, T>
+//{
+//public:
+//    Data()
+//    {
+//        cout << "Data<int, T>" << endl;
+//    }
+//};
+////将两个参数类型限制为指针类型，如果两个参数都是指针类型则调用这个特化
+//template<class T1, class T2>
+//class Data<T1*, T2*>
+//{
+//public:
+//    Data()
+//    {
+//        cout << "Data<T1*, T2*>" << endl;
+//    }
+//};
+//int main()
+//{
+//    //double a = 1;
+//    //double* ap = &a;
+//    //int b = 2;
+//    //int* bp = &b;
+//    //cout << Add(ap, bp) << endl;//调用重载的Add
+//    //cout << Add<int>(a, b) << endl;//调用特化的Add
+//    Data<int, int> data1;//这里会调用部分特化
+//    Data<int, char> data2;//这里调用全特化
+//    Data<int*, char*> data3;//这里调用类型限制的特化
+//}
