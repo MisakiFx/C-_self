@@ -40,18 +40,20 @@
 //    cout << Fib(5) << endl;
 //}
 #include <stdio.h>
-#define F(X, Y) ((X)+(Y))
+//#define F(X, Y) ((X)+(Y))
 int main()
 {
-    enum ENUM_A
-    {
-        X1,
-        Y1,
-        Z1 = 5,
-        A1,
-        B1
-    };
-    enum ENUM_A enumA = Y1;
-    enum ENUM_A enumB = B1;
-    printf("%d %d\n", enumA, enumB);
+//    enum ENUM_A
+//    {
+//        X1,
+//        Y1,
+//        Z1 = 5,
+//        A1,
+//        B1
+//    };
+//    enum ENUM_A enumA = Y1;
+//    enum ENUM_A enumB = B1;
+//    printf("%d %d\n", enumA, enumB);
+    int i = 2;
+    printf("%d%d%d", i++, ++i, i++);
 } 
