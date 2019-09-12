@@ -9,6 +9,9 @@ int main()
     a.Reserve(30);
     String b(a);
     cout << b.Size() << " " << b.Capacity() << endl;
+    cout << a <<endl;
+    cout << a <<endl;
+    cout << a <<endl;
     //String b = "1234567";
     ////a.Push_back('8');
     ////char str[] = "123";
