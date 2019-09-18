@@ -3,22 +3,25 @@ using namespace std;
 class Person
 {
 public:
-    virtual Person* BuyTicket()
+    virtual void BuyTicket()
     {
         cout << "full ticket!" << endl;
-        return new Person;
     }
-
-    
+    virtual ~Person()
+    {
+        cout << "~Person()" << endl;
+    }
 };
 //Student类继承于
 class Student: public Person
 {
-    //参数不同无法构成重写
-    virtual Student* BuyTicket()
+    virtual void BuyTicket()
     {
         cout << "student ticket!" << endl;
-        return new Student;
+    }
+    virtual ~Student()
+    {
+        cout << "~Student()" << endl;
     }
 };
 int main()
@@ -28,4 +31,6 @@ int main()
     p->BuyTicket();
     Person* p2 = new Student();//切割，将子类对象指针赋值给父类指针
     p2->BuyTicket();
+    delete p;//调用Person析构函数
+    delete p2;//调用Student析构函数，由于Student继承于Person所以还会再调用基类析构函数
 }
