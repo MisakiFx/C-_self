@@ -1,37 +1,33 @@
 #include <iostream>
 using namespace std;
+//抽象类
 class Abstract
 {
 public:
     virtual void BuyTicket() = 0;
-    virtual void Ticket() = 0;
+    virtual void Ticket()
+    {
+
+    }
 };
 class Person : public Abstract
 {
 public:
+    //重写纯虚函数
     virtual void BuyTicket()
     {
         cout << "full ticket!" << endl;
-    }
-    virtual void Ticket()
-    {
-
     }
     virtual ~Person()
     {
         cout << "~Person()" << endl;
     }
 };
-//Student类继承于
 class Student: public Abstract
 {
     virtual void BuyTicket()
     {
         cout << "student ticket!" << endl;
-    }
-    virtual void Ticket()
-    {
-
     }
     virtual ~Student()
     {
@@ -40,7 +36,8 @@ class Student: public Abstract
 };
 int main()
 {
-    //这里肯定会造成内存泄露，这里为了演示暂时不考虑内存泄露的问题
+    //Abstract* pt = new Abstract();//报错，抽象类不能实例化对象
+    //之后所有的继承自抽象类的派生类就可以使用抽象类作为统一接口
     Abstract* p = new Person();
     p->BuyTicket();
     Abstract* p2 = new Student();//切割，将子类对象指针赋值给父类指针
