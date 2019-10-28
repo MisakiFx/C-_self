@@ -46,7 +46,7 @@ public:
             else if(cur->_kv.first > kv.first)
             {
                 parent = cur;
-                cut = cur->_left;
+                cur = cur->_left;
             }
             else
             {
@@ -57,6 +57,7 @@ public:
         if(parent->_kv.first < kv.first)
         {
             cur->_parent = parent;
+            parent->_right = cur;
         }
         else
         {
@@ -68,7 +69,7 @@ public:
         //新增在左，父亲bf - 1，新增在右，父亲bf + 1
         //如果父亲的更新后|bf|:
         //|bf| == 0 || 父结点为空时停止更新
-        //因为bf更新为0则说明父亲所在子树此时的高度并未发生变化，父结点为空说明此时更新完了整棵树
+        //因为bf更新为0则说明当前父亲所在子树此时的高度并未发生变化，父结点为空说明此时更新完了整棵树
         //|bf| == 2也停止更新，及时调整，旋转处理
         //|bf| == 1则继续向上更新
         while(parent)
@@ -91,19 +92,202 @@ public:
                 cur = parent;
                 parent = parent->_parent;
             }
-            else if(abs(parent->_bf) == 2)//及时旋转调整
+            else if(abs(parent->_bf) == 2)//不满足AVLTree要求及时旋转调整
             {
-                
+                //2、旋转
+                if(parent->_bf == 2)
+                {
+                    if(cur->_bf == 1)
+                    {
+                        RotateL(parent);
+                    }
+                    else if(cur->_bf == -1)
+                    {
+                        RotateRL(parent);
+                    }
+                }
+                else if(parent->_bf == -2)
+                {
+                    if(cur->_bf == -1)
+                    {
+                        RotateR(parent);
+                    }
+                    else if(cur->_bf == 1)
+                    {
+                        RotateLR(parent);
+                    }
+                }
+                break;//调整完一定要记着break
             }
             else//在三种情况外，说明出现问题
             {
-                assert(flase);
+                assert(false);
             }
-            
-            
         }
-        return ture;
+        return true;
+    }
+    void RotateL(Node* parent)
+    {
+        Node* subR = parent->_right;
+        Node* subRL = parent->_right->_left;
+
+        parent->_right = subRL;
+        if(subRL)
+        {
+            subRL->_parent = parent;
+        }
+        subR->_left = parent;
+        Node* ppNode = parent->_parent;
+        parent->_parent = subR;
+        //根
+        if(ppNode == nullptr)
+        {
+            _root = subR;
+            subR->_parent = nullptr;
+        }
+        else
+        {
+            if(ppNode->_right == parent)
+            {
+                ppNode->_right = subR;
+            }
+            else
+            {
+                ppNode->_left = subR;
+            }
+            subR->_parent = ppNode;
+        }
+        //更新平衡因子
+        subR->_bf = parent->_bf = 0;
+    }
+    void RotateR(Node* parent)
+    {
+        Node* subL = parent->_left;
+        Node* subLR = parent->_left->_right;
+
+        parent->_left = subLR;
+        if(subLR)//subLR可能会为空，当h == 0时subLR为空
+        {
+            subLR->_parent = parent;
+        }
+
+        subL->_right = parent;//subL不可能为空
+        //记录下parent原来的父结点，为了方便parent移动可以找到这棵子树的父结点
+        Node* ppNode = parent->_parent;
+        parent->_parent = subL;
+        //更新这棵子树的新父结点subL与其父结点的连接
+        if(ppNode == nullptr)//如果子树的父结点为空则说明parent原本是整棵树的根节点
+        {
+            _root = subL;
+            _root->_parent = nullptr;
+        }
+        else
+        {
+            if(ppNode->_right == parent)
+            {
+                ppNode->_right = subL;
+            }
+            else
+            {
+                ppNode->_left = subL;
+            }
+            subL->_parent = ppNode;
+        }
+        parent->_bf = subL->_bf = 0;
+    }
+    //先左旋再右旋
+    void RotateLR(Node* parent)
+    {
+        RotateL(parent->_left);
+        RotateR(parent);
+        //注意这里双旋过后父结点的平衡因子不会为0
+        //先左旋再右旋会变为1
+        parent->_bf = 1;
+    }
+    //先右旋再左旋
+    void RotateRL(Node* parent)
+    {
+        Node* subR = parent->_right;
+        Node* subRL = subR->_left;
+        //保存subRL的平衡因子，之后要根据这个判断parent和subR的平衡因子分别更新为多少
+        int bf = subRL->_bf;
+        RotateR(parent->_right);
+        RotateL(parent);
+        //注意这里双旋过后父结点的平衡因子不会为0
+        if(bf == 0)
+        {
+            parent->_bf = subRL->_bf = subR->_bf = 0;
+        }
+        else if(bf == 1)
+        {
+            subR->_bf = 0;
+            parent->_bf = -1;
+            subRL->_bf = 0;
+        }
+        else if(bf == -1)
+        {
+            parent->_bf = 0;
+            subR->_bf = 1;
+            subRL->_bf = 0;
+        }
+    }
+    //中序
+    void InOrder()
+    {
+        _InOrder(_root);
+        std::cout << std::endl;
+    }
+    //为了判定它是一棵平衡树我们写一个求树高度的函数
+    int _Height(Node* root)
+    {
+        if(root == nullptr)
+        {
+            return 0;
+        }
+        int leftHeight = _Height(root->_left);
+        int rightHeight = _Height(root->_right);
+        return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
+    }
+    bool IsBalance()
+    {
+        return _IsBalance(_root);
+    }
+    bool _IsBalance(Node* root)
+    {
+        if(root == nullptr)
+        {
+            return true;
+        }
+        int leftHeight = _Height(root->_left);
+        int rightHeight = _Height(root->_right);
+        if(rightHeight - leftHeight != root->_bf)
+        {
+            std::cout << root->_kv.first << " is error" << std::endl;
+        }
+        return (abs(leftHeight - rightHeight) < 2) && _IsBalance(root->_left) && _IsBalance(root->_right);
     }
 private:
+    void _InOrder(Node* parent)
+    {
+        if(parent == nullptr)
+        {
+            return;
+        }
+        _InOrder(parent->_left);
+        std::cout << parent->_kv.first << " ";
+        _InOrder(parent->_right);
+    }
     Node* _root = nullptr;
 };
+void TestAVLTree()
+{
+    AVLTree<int, int> t;
+    int a[] = {16, 3, 7, 11, 9, 26, 18, 14, 15};
+    int b[] = {4, 2, 6, 1, 3, 5, 15, 7, 16, 14};
+    for(auto e : b)
+    {
+        t.Insert(std::make_pair(e, e));
+    }
+    t.InOrder();
+    std::cout << t.IsBalance() << std::endl;
+}

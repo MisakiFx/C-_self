@@ -2,5 +2,6 @@
 #include "AVLTree.hpp"
 int main()
 {
-    TestBsTree1();
+    //TestBsTree1();
+    TestAVLTree();
 }
