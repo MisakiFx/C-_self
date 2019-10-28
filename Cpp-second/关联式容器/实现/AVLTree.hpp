@@ -198,11 +198,31 @@ public:
     //先左旋再右旋
     void RotateLR(Node* parent)
     {
+        Node* subL = parent->_left;
+        Node* subLR = subL->_right;
+        //保存subRL的平衡因子，之后要根据这个判断parent和subR的平衡因子分别更新为多少
+        int bf = subLR->_bf;
+
         RotateL(parent->_left);
         RotateR(parent);
-        //注意这里双旋过后父结点的平衡因子不会为0
-        //先左旋再右旋会变为1
-        parent->_bf = 1;
+        //注意这里双旋过后父结点的平衡因子不一定会为0
+        if(bf == 0)
+        {
+            parent->_bf = subLR->_bf = subL->_bf = 0;
+        }
+        else if(bf == 1)
+        {
+            subL->_bf = -1;
+            parent->_bf = 0;
+            subLR->_bf = 0;
+        }
+        else if(bf == -1)
+        {
+            parent->_bf = 1;
+            subL->_bf = 0;
+            subLR->_bf = 0;
+        }
+
     }
     //先右旋再左旋
     void RotateRL(Node* parent)
@@ -213,18 +233,19 @@ public:
         int bf = subRL->_bf;
         RotateR(parent->_right);
         RotateL(parent);
-        //注意这里双旋过后父结点的平衡因子不会为0
-        if(bf == 0)
+        //注意这里双旋过后父结点的平衡因子不一定会为0
+        //这里三个结点的平衡因子更新要根据新节点到底插在哪里来决定
+        if(bf == 0)//此时说明subRL为新增结点
         {
             parent->_bf = subRL->_bf = subR->_bf = 0;
         }
-        else if(bf == 1)
+        else if(bf == 1)//此时说明新增节点插在c树上
         {
             subR->_bf = 0;
             parent->_bf = -1;
             subRL->_bf = 0;
         }
-        else if(bf == -1)
+        else if(bf == -1)//此时说明新增结点插在b树上
         {
             parent->_bf = 0;
             subR->_bf = 1;
