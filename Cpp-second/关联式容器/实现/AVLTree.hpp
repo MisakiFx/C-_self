@@ -126,40 +126,6 @@ public:
         }
         return true;
     }
-    void RotateL(Node* parent)
-    {
-        Node* subR = parent->_right;
-        Node* subRL = parent->_right->_left;
-
-        parent->_right = subRL;
-        if(subRL)
-        {
-            subRL->_parent = parent;
-        }
-        subR->_left = parent;
-        Node* ppNode = parent->_parent;
-        parent->_parent = subR;
-        //根
-        if(ppNode == nullptr)
-        {
-            _root = subR;
-            subR->_parent = nullptr;
-        }
-        else
-        {
-            if(ppNode->_right == parent)
-            {
-                ppNode->_right = subR;
-            }
-            else
-            {
-                ppNode->_left = subR;
-            }
-            subR->_parent = ppNode;
-        }
-        //更新平衡因子
-        subR->_bf = parent->_bf = 0;
-    }
     void RotateR(Node* parent)
     {
         Node* subL = parent->_left;
@@ -269,6 +235,7 @@ public:
         int rightHeight = _Height(root->_right);
         return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
     }
+    //判断这是否是一颗平衡二叉树
     bool IsBalance()
     {
         return _IsBalance(_root);
@@ -281,6 +248,7 @@ public:
         }
         int leftHeight = _Height(root->_left);
         int rightHeight = _Height(root->_right);
+        //也有可能会出现平衡因子更新错误的情况，这里再做二次判断
         if(rightHeight - leftHeight != root->_bf)
         {
             std::cout << root->_kv.first << " is error" << std::endl;

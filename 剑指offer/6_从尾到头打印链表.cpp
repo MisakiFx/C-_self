@@ -11,7 +11,8 @@ struct ListNode
     }
 };
 class Solution {
-public:
+public: 
+    //用栈来实现
     vector<int> printListFromTailToHead(ListNode* head) {
         stack<int> temp;
         ListNode* headtemp = head;
@@ -28,8 +29,24 @@ public:
         }
         return res;
     }
+    //用递归来实现
+    vector<int> printListFromTailToHead_Recursively(ListNode* head)
+    {
+        vector<int> arr;
+        if(head != nullptr)
+        {
+            if(head->next != nullptr)
+            {
+                printListFromTailToHead_Recursively(head->next);
+            }
+            else
+            {
+                arr.push_back(head->val);
+            }
+        }
+    }
 };
 int main()
 {
-
+    
 }
