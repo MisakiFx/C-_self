@@ -126,6 +126,42 @@ public:
         }
         return true;
     }
+    //左旋
+    void RotateL(Node* parent)
+    {
+        Node* subR = parent->_right;
+        Node* subRL = parent->_right->_left;
+
+        parent->_right = subRL;
+        if(subRL)
+        {
+            subRL->_parent = parent;
+        }
+        subR->_left = parent;
+        Node* ppNode = parent->_parent;
+        parent->_parent = subR;
+        //根
+        if(ppNode == nullptr)
+        {
+            _root = subR;
+            subR->_parent = nullptr;
+        }
+        else
+        {
+            if(ppNode->_right == parent)
+            {
+                ppNode->_right = subR;
+            }
+            else
+            {
+                ppNode->_left = subR;
+            }
+            subR->_parent = ppNode;
+        }
+        //更新平衡因子
+        subR->_bf = parent->_bf = 0;
+    }
+    //右旋
     void RotateR(Node* parent)
     {
         Node* subL = parent->_left;
