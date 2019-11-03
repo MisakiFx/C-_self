@@ -22,18 +22,18 @@ void TestMapSet()
     {
         std::cout << e.first << " " << e.second << std::endl;
     }
-    //Set<int> S;
-    //S.Insert(1);
-    //S.Insert(3);
-    //S.Insert(5);
-    //S.Insert(6);
-    //S.Insert(2);
-    //S.Insert(6);
-    //std::cout << std::endl;
-    //for(auto e : S)
-    //{
-    //    std::cout << e << " ";
-    //}
+    Set<int> S;
+    S.Insert(1);
+    S.Insert(3);
+    S.Insert(5);
+    S.Insert(6);
+    S.Insert(2);
+    S.Insert(6);
+    std::cout << std::endl;
+    for(auto e : S)
+    {
+        std::cout << e << " ";
+    }
 }
 int main()
 {
