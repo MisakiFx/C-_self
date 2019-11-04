@@ -2,43 +2,122 @@
 #include <iostream>
 #include <utility>
 #include <vector>
-template<class K, class V>
 //这里现在存的就是链表结点
 //这里我们使用单链表就行了
+//这里依然为了更好的封装对原有的哈希桶进行了修改
+template<class V>
 struct HashNode
 {
-    HashNode(const std::pair<K, V>& data = std::pair<K, V>())
+    HashNode(const V& data = V())
         :_data(data)
         ,_next(nullptr)
     {
     }
-    std::pair<K, V> _data;
-    HashNode<K, V>* _next;
+    V _data;
+    HashNode<V>* _next;
 };
-template<class K, class V>
-class HashTable
+template<class K, class V, class KeyOfCalue>
+class HashTable;
+template<class K, class V, class KeyOfValue>
+class _HashIterator
 {
 public:
-    typedef HashNode<K, V> Node;
+    typedef HashNode<V> Node;
+    typedef _HashIterator<K, V, KeyOfValue> Self;
+    typedef HashTable<K, V, KeyOfValue> HTable;
+    _HashIterator(Node* node, HTable* pht)
+        :_node(node)
+        ,_pht(pht)
+    {
+    }
+    V& operator*()
+    {
+        return _node->_data;
+    }
+    V* operator->()
+    {
+        return &_node->_data;
+    }
+    bool operator!=(const Self& it)
+    {
+        return _node != it._node;
+    }
+    Self& operator++()
+    {
+        if(_node->_next)
+        {
+            _node = _node->_next;
+        }
+        else
+        {
+            KeyOfValue kov;
+            //找到下一个非空链表头
+            //1、首先确定当前迭代器在哈希表中的位置
+            int index = kov(_node->_data) % _pht->_ht.size();
+            ++index;
+            while(index < _pht->_ht.size())
+            {
+                if(_pht->_ht[index])
+                {
+                    _node = _pht->_ht[index];
+                    break;
+                }
+                ++index;
+            }
+            if(index == _pht->_ht.size())
+            {
+                _node = nullptr;
+            }
+        }
+        return *this;
+    }
+private:
+    Node* _node;
+    HTable* _pht;
+};
+template<class K, class V, class KeyOfValue>
+class HashTable
+{
+    friend class _HashIterator<K, V, KeyOfValue>;
+public:
+    typedef HashNode<V> Node;
+    typedef _HashIterator<K, V, KeyOfValue> iterator;
+    //迭代器相关
+    iterator begin()
+    {
+        for(int i = 0; i < _ht.size(); i++)
+        {
+            if(_ht[i] != nullptr)
+            {
+                return iterator(_ht[i], this);
+            }
+        }
+        return iterator(nullptr, this);
+    }
+    iterator end()
+    {
+        return iterator(nullptr, this);
+    }
     HashTable(size_t n = 10)
         :_size(0)
     {
-        _ht.resize(n);
+        _ht.resize(n, nullptr);
     }
     //插入
-    bool Insert(const std::pair<K, V>& data)
+    std::pair<iterator, bool> Insert(const V& data)
     {
         //检查负载因子，超过阈值进行扩容
         CheckCapacity();
         //计算位置
-        int index = data.first % _ht.size();
+        KeyOfValue kov;
+        int index = kov(data) % _ht.size();
         //遍历单链表
         Node* cur = _ht[index];
         while(cur)
         {
-            if(cur->_data.first == data.first)
+            if(kov(cur->_data) == kov(data))
             {
-                return false;
+                return std::make_pair(iterator(cur, this), false);
             }
             cur = cur->_next;
         }
@@ -47,16 +126,17 @@ public:
         cur->_next = _ht[index];
         _ht[index] = cur;
         ++_size;
-        return true;
+        return std::make_pair(iterator(cur, this), true);
     }
     //查找
     Node* Find(const K& key)
     {
+        KeyOfValue kov;
         int index = key % _ht.size();
         Node* cur = _ht[index];
         while(cur)
         {
-            if(cur->_data.first == key)
+            if(kov(cur->_data) == key)
             {
                 return cur;
             }
@@ -70,9 +150,10 @@ public:
         int index = key % _ht.size();
         Node* cur = _ht[index];
         Node* parent = nullptr;
+        KeyOfValue kov;
         while(cur)
         {
-            if(cur->_data.first == key)
+            if(kov(cur->_data) == key)
             {
                 //删除
                 if(parent == nullptr)
@@ -102,13 +183,14 @@ public:
             size_t newC = _ht.size() == 0 ? 10 : 2 * _ht.size();
             std::vector<Node*> newHt;
             newHt.resize(newC);
+            KeyOfValue kov;
             //搬运数据，将原哈希表中的结点连接到新哈希表上
             for(int i = 0; i < _ht.size(); i++)
             {
                 Node* cur = _ht[i];
                 while(cur)
                 {
-                    int index = cur->_data.first % newHt.size();
+                    int index = kov(cur->_data) % newHt.size();
                     Node* next = _ht[i]->_next;
                     //头插进新表
                     cur->_next = newHt[index];

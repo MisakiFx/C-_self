@@ -1,5 +1,5 @@
 #pragma once
-#include "hash_bucket.hpp"
+#include "hash_bucketMod.hpp"
 template<class K>
 class Unordered_set
 {
@@ -11,7 +11,16 @@ class Unordered_set
         }
     };
 public:
-    bool Insert(const K& data)
+    typedef typename HashTable<K, K, SetKeyOfValue>::iterator iterator;
+    iterator begin()
+    {
+        return _ht.begin();
+    }
+    iterator end()
+    {
+        return _ht.end();
+    }
+    std::pair<iterator, bool> Insert(const K& data)
     {
         return _ht.Insert(data);
     }

@@ -9,11 +9,28 @@ void test3()
     umap.Insert(std::make_pair(5, 5));
     umap.Insert(std::make_pair(6, 6));
     umap.Insert(std::make_pair(9, 9));
+    for(auto e : umap)
+    {
+        std::cout << e.first << " " << e.second << std::endl;
+    }
+    umap[6] = 11;
+    umap[10] = 10;
+    umap[25] = 1;
+    std::cout << std::endl;
+    for (auto e : umap)
+    {
+        std::cout << e.first << " " << e.second << std::endl;
+    }
     Unordered_set<int> uset;
     uset.Insert(1);
     uset.Insert(5);
     uset.Insert(6);
     uset.Insert(9);
+    std::cout << std::endl;
+    for (auto e : uset)
+    {
+        std::cout << e << std::endl;
+    }
 }
 //void test1()
 //{
@@ -69,5 +86,5 @@ void test3()
 //}
 int main()
 {
-
+    test3();
 }
