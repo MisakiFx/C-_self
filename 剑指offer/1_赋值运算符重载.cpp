@@ -5,16 +5,16 @@ class CMyString
 {
 public:
     //构造函数
-    CMyString(const char* pData)
-        :m_pData(nullptr)
+    CMyString(const char *pData)
+        : m_pData(nullptr)
     {
         m_pData = new char[strlen(pData) + 1];
         strcpy(m_pData, pData);
     }
     //拷贝构造
-    CMyString(const CMyString& myString)
+    CMyString(const CMyString &myString)
     {
-        if(myString.m_pData == nullptr)
+        if (myString.m_pData == nullptr)
         {
             m_pData == nullptr;
             return;
@@ -41,7 +41,7 @@ public:
     //    return *this;
     //}
     ///进阶版赋值运算符重载，解决了异常安全问题
-    CMyString& operator=(const CMyString& myString)
+    CMyString &operator=(const CMyString &myString)
     {
         //防止是同一个对象
         if (this != &myString)
@@ -55,12 +55,12 @@ public:
     }
     ~CMyString()
     {
-        if(m_pData != nullptr)
+        if (m_pData != nullptr)
         {
             delete[] m_pData;
         }
     }
-    char* m_pData;
+    char *m_pData;
 };
 int main()
 {

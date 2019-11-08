@@ -1,33 +1,36 @@
 #include <iostream>
-struct TreeLinkNode {
+struct TreeLinkNode
+{
     int val;
     struct TreeLinkNode *left;
     struct TreeLinkNode *right;
     struct TreeLinkNode *next;
-    TreeLinkNode(int x) :val(x), left(NULL), right(NULL), next(NULL) {
+    TreeLinkNode(int x) : val(x), left(NULL), right(NULL), next(NULL)
+    {
     }
 };
-class Solution {
+class Solution
+{
 public:
-    TreeLinkNode* GetNext(TreeLinkNode* pNode)
+    TreeLinkNode *GetNext(TreeLinkNode *pNode)
     {
-        if(pNode == nullptr)
+        if (pNode == nullptr)
         {
             return nullptr;
         }
         //当前节点右子树不为空找右子树的最左节点
-        if(pNode->right != nullptr)
+        if (pNode->right != nullptr)
         {
             pNode = pNode->right;
-            while(pNode->left)
+            while (pNode->left)
             {
                 pNode = pNode->left;
             }
         }
         else
         {
-            TreeLinkNode* parent = pNode->next;
-            while(parent != nullptr && pNode == parent->right)
+            TreeLinkNode *parent = pNode->next;
+            while (parent != nullptr && pNode == parent->right)
             {
                 pNode = parent;
                 parent = parent->next;

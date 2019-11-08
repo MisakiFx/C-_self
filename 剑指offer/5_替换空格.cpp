@@ -1,29 +1,28 @@
 #include <iostream>
 #include <string>
 using namespace std;
-class Solution 
+class Solution
 {
 public:
-    
-	void replaceSpace(char *str,int length) 
+    void replaceSpace(char *str, int length)
     {
         int oldLength = 0, newLength = 0, spaceCount = 0;
-        for(int i = 0; str[i] != '\0'; i++)
+        for (int i = 0; str[i] != '\0'; i++)
         {
             oldLength++;
-            if(str[i] == ' ')
+            if (str[i] == ' ')
             {
                 spaceCount++;
             }
         }
         newLength = oldLength + 2 * spaceCount;
-        if(newLength > length)
+        if (newLength > length)
         {
             return;
         }
-        while(oldLength >= 0 && newLength > oldLength)
+        while (oldLength >= 0 && newLength > oldLength)
         {
-            if(str[oldLength] != ' ')
+            if (str[oldLength] != ' ')
             {
                 str[newLength] = str[oldLength];
                 newLength--;
@@ -37,7 +36,7 @@ public:
             }
             oldLength--;
         }
-	}
+    }
 };
 int main()
 {

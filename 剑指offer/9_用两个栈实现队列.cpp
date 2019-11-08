@@ -4,14 +4,16 @@ using namespace std;
 class Solution
 {
 public:
-    void push(int node) {
+    void push(int node)
+    {
         stack1.push(node);
     }
 
-    int pop() {
-        if(stack2.empty())
+    int pop()
+    {
+        if (stack2.empty())
         {
-            while(!stack1.empty())
+            while (!stack1.empty())
             {
                 stack2.push(stack1.top());
                 stack1.pop();
