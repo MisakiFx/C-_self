@@ -1,23 +1,25 @@
 #include <iostream>
-using namespace std;
-class Base
+#include <string>
+#include <string.h>
+#include <windows.h>
+char *G2U(const char* gb2312)
 {
-    public:
-        void Func()
-        {
-            cout << "123" << endl;
-        }
-};
-class Deriver : public Base
-{
-    protected:
-        void Func()
-        {
-            cout << "456" << endl;
-        }
-};
+    int len = MultiByteToWideChar(CP_ACP, 0, gb2312, -1, NULL, 0);
+    wchar_t *wstr = new wchar_t[len + 1];
+    memset(wstr, 0, len + 1);
+    MultiByteToWideChar(CP_ACP, 0, gb2312, -1, wstr, len);
+    len = WideCharToMultiByte(CP_UTF8, 0, wstr, -1, NULL, 0, NULL, NULL);
+    char *str = new char[len + 1];
+    memset(str, 0, len + 1);
+    WideCharToMultiByte(CP_UTF8, 0, wstr, -1, str, len, NULL, NULL);
+    if (wstr)
+        delete[] wstr;
+    return str;
+}
+
 int main()
 {
-    Base* b = new Deriver();
-    b->Func();
+    std::string souce = "’‚ «GB2312";
+    char* str = G2U(souce.c_str());
+    std::cout << str << std::endl;
 }
