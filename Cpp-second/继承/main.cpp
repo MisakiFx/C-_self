@@ -96,7 +96,7 @@
 //    int _age;
 //    string _name;
 //};
-////派生类
+////派类
 //class Teacher: public Person
 //{
 //public:
@@ -231,13 +231,13 @@ public:
     char _a = 'A';
 };
 //使用虚拟继承使B继承于A
-class B: virtual public A
+class B: public virtual A
 {
 public:
-    char _b = 'B';
+    //char _b = 'B';
 };
 //使用虚拟继承使C继承于A
-class C: virtual public A
+class C: public virtual A
 {
 public:
     char _c = 'C';
@@ -251,18 +251,23 @@ public:
 int main()
 {
     //一旦使用虚拟继承那么D类中就只存在一份A的成员变量
-    //D d;
+    D d;
     ////无论用什么作用域进行访问都只能访问到同一份
     //d.B::_a = 'E';
     //cout << d._a << endl;
     //cout << d.B::_a << endl;
     //cout << d.C::_a << endl;
     //d.C::_a = 'F';
-    //cout << d._a << endl;
-    //cout << d.B::_a << endl;
-    //cout << d.C::_a << endl;
+    cout << d._a << endl;
+    d._a = 'B';
+    cout << d.B::_a << endl;
+    cout << d.C::_a << endl;
     //cout << d.A::_a << endl;
     cout << sizeof(B) << endl;
+    cout << sizeof(C) << endl;
+    cout << sizeof(D) << endl;
+    int* ptr;
+    std::cout << sizeof(ptr) << std::endl;
     //Person::_count = 3;
     //Person::Print();
     //Teacher::Print();
