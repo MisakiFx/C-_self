@@ -228,7 +228,7 @@ using namespace std;
 class A
 {
 public:
-    char _a = 'A';
+    //char _a = 'A';
 };
 //使用虚拟继承使B继承于A
 class B: public virtual A
@@ -240,7 +240,7 @@ public:
 class C: public virtual A
 {
 public:
-    char _c = 'C';
+    //char _c = 'C';
 };
 //D继承于B,C
 class D: public B, public C
@@ -258,10 +258,10 @@ int main()
     //cout << d.B::_a << endl;
     //cout << d.C::_a << endl;
     //d.C::_a = 'F';
-    cout << d._a << endl;
-    d._a = 'B';
-    cout << d.B::_a << endl;
-    cout << d.C::_a << endl;
+    //cout << d._a << endl;
+    //d._a = 'B';
+    //cout << d.B::_a << endl;
+    //cout << d.C::_a << endl;
     //cout << d.A::_a << endl;
     cout << sizeof(B) << endl;
     cout << sizeof(C) << endl;
