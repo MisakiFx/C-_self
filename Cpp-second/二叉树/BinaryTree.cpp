@@ -17,7 +17,7 @@ public:
         :_head(nullptr)
         ,_size(0)
     {}
-
+    
 private:
     BinaryTree<T>* _head;           //与链表一样存储一个头结点即可
     size_t _size;                   //节点个数
