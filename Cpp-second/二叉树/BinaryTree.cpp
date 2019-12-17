@@ -16,7 +16,9 @@ public:
     BinaryTree()
         :_head(nullptr)
         ,_size(0)
-    {}
+    {
+
+    }
     
 private:
     BinaryTree<T>* _head;           //与链表一样存储一个头结点即可
