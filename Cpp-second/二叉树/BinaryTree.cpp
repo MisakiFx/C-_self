@@ -26,12 +26,28 @@ public:
     {
         _head = CreateBPreOrder(preOrder, 0);
     }
+    //前序遍历
+    void PreOrder()
+    {
+        PreOrderCore(_head);
+    }
 private:
-    BinaryTreeNode<T> CreateBPreOrder(const std::string& preOrder, int i)
+    void PreOrderCore(BinaryTreeNode<T>* root)
+    {
+        if(root == nullptr)
+        {
+            std::cout << "#";
+            return;
+        }
+        std::cout << (char)('A' + root->_data);
+        PreOrderCore(root->_left);
+        PreOrderCore(root->_right);
+    }
+    BinaryTreeNode<T>* CreateBPreOrder(const std::string& preOrder, int i)
     {
         if(preOrder[i] != '#')
         {
-            BinaryTreeNode<T>* root = new BinaryTreeNode<T>(preOrder[i] - '0');
+            BinaryTreeNode<T>* root = new BinaryTreeNode<T>(preOrder[i] - 'A');
             root->_left = CreateBPreOrder(preOrder, ++i);
             root->_right = CreateBPreOrder(preOrder, ++i);
             return root;
@@ -45,3 +61,10 @@ private:
     BinaryTreeNode<T>* _head;           //与链表一样存储一个头结点即可
     size_t _size;                   //节点个数
 };
+
+
+int main()
+{
+    BinaryTree<int> tree("ABD##E#H##CF##G##");
+    tree.PreOrder();
+}
