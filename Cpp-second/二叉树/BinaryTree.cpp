@@ -24,7 +24,8 @@ public:
     {}
     BinaryTree(const std::string& preOrder)
     {
-        _head = CreateBPreOrder(preOrder, 0);
+        int i = 0;
+        _head = CreateBPreOrder(preOrder, i);
     }
     //前序遍历
     void PreOrder()
@@ -43,7 +44,7 @@ private:
         PreOrderCore(root->_left);
         PreOrderCore(root->_right);
     }
-    BinaryTreeNode<T>* CreateBPreOrder(const std::string& preOrder, int i)
+    BinaryTreeNode<T>* CreateBPreOrder(const std::string& preOrder, int& i)
     {
         if(preOrder[i] != '#')
         {
