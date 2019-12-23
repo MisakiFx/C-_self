@@ -67,5 +67,5 @@ private:
 int main()
 {
     BinaryTree<int> tree("ABD##E#H##CF##G##");
-    tree.PreOrder();
+    //tree.PreOrder();
 }
