@@ -64,7 +64,6 @@ public:
         }
         return newHead;
     }
-};
     //非递归版本
     ListNode* Merge2(ListNode* pHead1, ListNode* pHead2)
     {
@@ -80,12 +79,12 @@ public:
         if(pHead1->val <= pHead2->val)
         {
             newHead = pHead1;
-            newHead->next = Merge(pHead1->next, pHead2);
+            newHead->next = Merge2(pHead1->next, pHead2);
         }
         if(pHead1->val > pHead2->val)
         {
             newHead = pHead2;
-            newHead->next = Merge(pHead1, pHead2->next);
+            newHead->next = Merge2(pHead1, pHead2->next);
         }
         return newHead;
     }
