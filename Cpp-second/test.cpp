@@ -24,35 +24,64 @@
 //    char* str = G2U(souce.c_str());
 //    std::cout << str << std::endl;
 //}
+//#include <iostream>
+//#include <vector>
+//#include <algorithm>
+//
+//int main()
+//{
+//    int N = 0, V = 0;
+//    while(std::cin >> N >> V)
+//    {
+//        std::vector<int> V(N, 0), W(N, 0);
+//        for(int i = 0; i < N; i++)
+//        {
+//            std::cin >> V[i] >> W[i];
+//        }
+//        std::vector<std::vector<int>> dp(N + 1, std::vector<int>(V + 1, 0));
+//        for(int i = 1; i <= N; i++)
+//        {
+//            for(int j = 1; j <= V; j++)
+//            {
+//                if(j > W[i])
+//                {
+//                    dp[i][j] = std::max(dp[i - 1][j], dp[i - 1][j - W[i]] + V[i]);
+//                }
+//                else 
+//                {
+//                    dp[i][j] = dp[i - 1][j];
+//                }
+//            }
+//        }
+//        std::cout << dp[N][V] << std::endl;
+//    }
+//}
 #include <iostream>
-#include <vector>
-#include <algorithm>
 
+#include <iostream>
+using namespace std;
+class A
+{
+public:
+};
+//Ê¹ÓÃÐéÄâ¼Ì³ÐÊ¹B¼Ì³ÐÓÚA
+class B: virtual public A
+{
+public:
+};
+//Ê¹ÓÃÐéÄâ¼Ì³ÐÊ¹C¼Ì³ÐÓÚA
+class C: virtual public A
+{
+public:
+    char _c = 'C';
+};
+//D¼Ì³ÐÓÚB,C
+class D: public B, public C
+{
+public:
+    char _d = 'D';
+};
 int main()
 {
-    int N = 0, V = 0;
-    while(std::cin >> N >> V)
-    {
-        std::vector<int> V(N, 0), W(N, 0);
-        for(int i = 0; i < N; i++)
-        {
-            std::cin >> V[i] >> W[i];
-        }
-        std::vector<std::vector<int>> dp(N + 1, std::vector<int>(V + 1, 0));
-        for(int i = 1; i <= N; i++)
-        {
-            for(int j = 1; j <= V; j++)
-            {
-                if(j > W[i])
-                {
-                    dp[i][j] = std::max(dp[i - 1][j], dp[i - 1][j - W[i]] + V[i]);
-                }
-                else 
-                {
-                    dp[i][j] = dp[i - 1][j];
-                }
-            }
-        }
-        std::cout << dp[N][V] << std::endl;
-    }
+    std::cout << sizeof(B) << std::endl;
 }
